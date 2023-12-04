@@ -2,8 +2,10 @@ import numpy as np
 from case import*
 import random
 
-def verif_obstacle(case):
-    return case.type == 1
+
+
+largeur, hauteur = 800, 800
+taille_case = largeur // 16
 
 class Robot:
     def __init__(self, posx, posy):
