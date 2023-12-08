@@ -1,6 +1,7 @@
 import pygame
 from plateau import *
 import numpy as np
+import os
 from robot import * 
 # Définir les couleurs
 BLANC = (255, 255, 255)
@@ -23,8 +24,9 @@ fenetre = pygame.display.set_mode((largeur, hauteur))
 pygame.display.set_caption("Plateau de jeu")
 
 # Charger les image et redimensionner
-robotbleu_image = pygame.image.load("D:\\REMI\\COURS\\UTBM\\INFO\\IA41\\PROJET\\rasendeRoboter\\img\\robotbleu.JPG")
-robotjaune_image = pygame.image.load("D:\\REMI\\COURS\\UTBM\\INFO\\IA41\\PROJET\\rasendeRoboter\\img\\robotjaune.JPG")
+script_dir = os.path.dirname(os.path.realpath(__file__))
+robotbleu_image = pygame.image.load(os.path.join(script_dir, 'img', 'robotbleu.JPG'))
+robotjaune_image = pygame.image.load(os.path.join(script_dir, 'img', 'robotjaune.JPG'))
 robot_largeur = int(largeur // 16 * 0.9)
 robot_hauteur = int(hauteur // 16 * 0.9)
 robotbleu_image = pygame.transform.scale(robotbleu_image, (robot_largeur,robot_hauteur))
@@ -168,8 +170,8 @@ def pressed_key_robot(robot , keys):
         robot.deplacer('bas', plateau)
 
 # Créer un robot
-robotbleu = Robot(position=(0, 0))
-robotjaune = Robot(position=(15, 15))
+robotbleu = Robot(position=(0, 0),nom="robotbleu")
+robotjaune = Robot(position=(15, 15),nom="robotjaune")
 
 liste_robot = [robotbleu, robotjaune]
 

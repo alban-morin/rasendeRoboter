@@ -5,6 +5,7 @@ from robot import *
 import random
 import numpy as np
 from ai import *
+import os
 # Définissez les constantes de couleurs
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
@@ -40,8 +41,9 @@ class Game:
         self.liste_robots = [self.robot_bleu, self.robot_jaune]
 
         # Charger les images et redimensionner
-        self.robot_bleu_image = pygame.image.load("D:\\REMI\\COURS\\UTBM\\INFO\\IA41\\PROJET\\rasendeRoboter\\img\\robotbleu.JPG")
-        self.robot_jaune_image = pygame.image.load("D:\\REMI\\COURS\\UTBM\\INFO\\IA41\\PROJET\\rasendeRoboter\\img\\robotjaune.JPG")
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        self.robot_bleu_image = pygame.image.load(os.path.join(script_dir, 'img', 'robotbleu.JPG'))
+        self.robot_jaune_image = pygame.image.load(os.path.join(script_dir, 'img', 'robotjaune.JPG'))
         self.robot_largeur = int(self.largeur // 16 * 0.9)
         self.robot_hauteur = int(self.hauteur // 16 * 0.9)
         self.robot_bleu_image = pygame.transform.scale(self.robot_bleu_image, (self.robot_largeur, self.robot_hauteur))
