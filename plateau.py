@@ -2,27 +2,8 @@ import numpy as np
 from case import*
 import random
 
-
-
 largeur, hauteur = 800, 800
 taille_case = largeur // 16
-
-class Robot:
-    def __init__(self, posx, posy):
-        """
-        Initialisateur de la classe Robot.
-
-        Args:
-            posx (int): Position en x du robot.
-            posy (int): Position en y du robot.
-        """
-        self.posx = 1  # going from 0 to 15
-        self.posy = 1
-
-    def ask_direction(self):
-
-        print("In which direction do you want to go? (u/d/l/r)")
-        direction = input()
 
 class Plateau:
     def __init__(self):

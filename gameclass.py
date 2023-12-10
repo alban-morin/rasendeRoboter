@@ -6,7 +6,7 @@ import random
 import numpy as np
 from ai import *
 import os
-# Définissez les constantes de couleurs
+# Définition des constantes de couleurs
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 ROUGE = (255, 0, 0)
@@ -22,7 +22,6 @@ class Game:
         # Initialisation de Pygame
         pygame.init()
 
-        
         # Définir les dimensions de la fenêtre
         self.largeur, self.hauteur = 800, 800
 
@@ -70,6 +69,7 @@ class Game:
         for i in range(16):
             for j in range(16):
                 case = self.plateau.cases[i][j]
+                #convertir position back en positions display
                 x, y = j * self.taille_case, i * self.taille_case
 
                 # Dessiner les cibles
@@ -151,5 +151,5 @@ class Game:
 if __name__ == "__main__":
     jeu = Game()
     jeu.def_cible()  # Initialise les cibles
-    
+
     jeu.run()

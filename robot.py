@@ -24,6 +24,7 @@ class Robot:
             direction (str): Direction du déplacement ('gauche', 'droite', 'haut', 'bas').
             plateau (Plateau): Instance de la classe Plateau.
         """
+        #convertir en positions d'affichage
         i, j = self.position.y // taille_case, self.position.x // taille_case
   
         while True:
@@ -51,11 +52,14 @@ class Robot:
             else:
                 break  # Arrêter si un mur est rencontré
 
+            #reconvertir la position pixel en position back puis update le plateau
             i, j = self.position.y // taille_case, self.position.x // taille_case
         plateau.cases[i][j].type = 1
         
         print(f"Position du robot dans le tableau : ({i}, {j})")
 
+
+    #convertir en positions d'affichage
     def coordonnee_plateau(self):
         i, j = self.position.y // taille_case, self.position.x // taille_case
         return i,j
