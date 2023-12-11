@@ -19,6 +19,15 @@ class Case:
         self.left = left
         self.right = right
 
+    def coin(self):
+        """
+        Renvoie True si la case est un coin, False sinon.
+        """
+        if self.top and self.right or self.top and self.left or self.bottom and self.right or self.bottom and self.left:
+            return True
+        else:
+            return False
+
     # def set_wall(self, direction, value=True):
     #     """
     #     Définit la présence ou l'absence d'un mur dans la direction spécifiée.

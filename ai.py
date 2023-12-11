@@ -6,10 +6,11 @@ from collections import deque
 deplacements_liste = ['haut', 'bas', 'droite', 'gauche']
 
 class ai:
-    def __init__(self, robots, plateau, nombrecoups):
+    def __init__(self, robots, plateau, nombrecoups,cible):
         self.robots = robots
         self.plateau = plateau
         self.nombrecoups = nombrecoups
+        self.cible = cible
 
     def bfs(self):
         visited = set()
@@ -40,12 +41,6 @@ class ai:
                     
                     print("")
                     print("")
-                    print("")
-                    print("")
-                    print("")
-                    print("")
-                    print("")
-                    print("")
 
                     positions_robots = list_coordonnee(nouvel_etat)
                     print(positions_robots)
@@ -72,7 +67,13 @@ class ai:
                                 print()
                             print("---")
 
-            
+    def heuristique(self):
+        heuristique = 0
+        #heuristique = sqrt()
+
+
+    def Aetoile(self):
+        f=self.nombrecoups
 
 
 
