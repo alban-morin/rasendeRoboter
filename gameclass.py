@@ -30,7 +30,7 @@ class Game:
         self.robot_rouge = Robot(position=(15, 0), nom="Rouge")
 
         # Liste des robots
-        self.liste_robots = [self.robot_bleu, self.robot_jaune]
+        self.liste_robots = [self.robot_bleu, self.robot_jaune,self.robot_vert,self.robot_rouge]
 
         # Charger les images et redimensionner
         folder = os.path.dirname(os.path.realpath(__file__))
@@ -69,7 +69,7 @@ class Game:
 
         # Choix de la cible principale A FAIRE CORRECTEMENT
         self.target_main = random.choice(self.targets_list)
-
+        self.target_main.type = 2
         # Compteur de coups
         self.count = 0
 
@@ -78,11 +78,19 @@ class Game:
         #remplir de le fond de blanc
         self.fenetre.fill(BLANC)
         pygame.draw.rect(self.fenetre, NOIR, (0, 0, self.largeur, self.hauteur), 4)
+        
 
-        #dessiner les lignes de séparation entre les cases
         for i in range(1, 16):
-            pygame.draw.line(self.fenetre, NOIR, (i * self.taille_case, 0), (i * self.taille_case, self.hauteur))
-            pygame.draw.line(self.fenetre, NOIR, (0, i * self.taille_case), (self.largeur, i * self.taille_case))
+            for j in range(1, 16):
+
+                pygame.draw.line(self.fenetre, NOIR, (i * self.taille_case, 0), (i * self.taille_case, self.hauteur))
+                pygame.draw.line(self.fenetre, NOIR, (0, j * self.taille_case), (self.largeur, j * self.taille_case))
+
+        for (i, j) in [(7, 7), (7, 8), (8, 7), (8, 8)]:
+            x, y = j * self.taille_case, i * self.taille_case
+            pygame.draw.rect(self.fenetre, BLANC, (x, y, self.taille_case, self.taille_case), 4)
+
+
 
         #Dessiner les targets
         for i in range(16):
@@ -100,18 +108,48 @@ class Game:
                         elif element.couleur == BLEU:
                             self.fenetre.blit(self.cible_bleu_image[element.type], (x, y))
                         continue
+        
+        #echantillon de scale pour les targets
+            etalonage = pygame.transform.scale(
+        self.cible_rouge_image[self.target_main.type], (int(1.5 * self.robot_largeur), int(1.5 * self.robot_hauteur)))
+        target_main_x = self.largeur // 2 - etalonage.get_width() // 2
+        target_main_y = self.hauteur // 2 - etalonage.get_height() // 2
+
+        # Dessiner la cible principale
+        if self.target_main.couleur == ROUGE:
+            # Redimensionner seulement l'image de la cible principale au milieu
+            target_main_image = pygame.transform.scale(
+                self.cible_rouge_image[self.target_main.type], (int(1.5 * self.robot_largeur), int(1.5 * self.robot_hauteur)))
+            self.fenetre.blit(target_main_image, (target_main_x, target_main_y))
+        elif self.target_main.couleur == VERT:
+            # Redimensionner seulement l'image de la cible principale au milieu
+            target_main_image = pygame.transform.scale(
+                self.cible_vert_image[self.target_main.type], (int(1.5 * self.robot_largeur), int(1.5 * self.robot_hauteur)))
+            self.fenetre.blit(target_main_image, (target_main_x, target_main_y))
+        elif self.target_main.couleur == JAUNE:
+            # Redimensionner seulement l'image de la cible principale au milieu
+            target_main_image = pygame.transform.scale(
+                self.cible_jaune_image[self.target_main.type], (int(1.5 * self.robot_largeur), int(1.5 * self.robot_hauteur)))
+            self.fenetre.blit(target_main_image, (target_main_x, target_main_y))
+        elif self.target_main.couleur == BLEU:
+            # Redimensionner seulement l'image de la cible principale au milieu
+            target_main_image = pygame.transform.scale(
+                self.cible_bleu_image[self.target_main.type], (int(1.5 * self.robot_largeur), int(1.5 * self.robot_hauteur)))
+            self.fenetre.blit(target_main_image, (target_main_x, target_main_y))
+        
+
+
 
         for i in range(16):
             for j in range(16):
                 case = self.plateau.cases[i][j]
-                #convertir position back en positions display
                 x, y = j * self.taille_case, i * self.taille_case
-
-                # if (i, j) in [(7, 7), (7, 8), (8, 7), (8, 8)]:
-                #     pygame.draw.rect(self.fenetre, self.cible, (x, y, self.taille_case, self.taille_case))
+  
 
                 if case.top:
+                    # pygame.draw.line(self.fenetre, BLANC, (x, y), (x + self.taille_case, y), 0)
                     pygame.draw.line(self.fenetre, NOIR, (x, y), (x + self.taille_case, y), 4)
+                    
                 if case.bottom:
                     pygame.draw.line(self.fenetre, NOIR, (x, y + self.taille_case), (x + self.taille_case, y + self.taille_case), 4)
                 if case.left:
@@ -127,13 +165,13 @@ class Game:
 
     def pressed_key_robot(self, robot, keys):
         if keys[pygame.K_LEFT]:
-            robot.deplacer('gauche', self.plateau)
+            robot.deplacer('gauche', self.plateau, self.target_main)
         elif keys[pygame.K_RIGHT]:
-            robot.deplacer('droite', self.plateau)
+            robot.deplacer('droite', self.plateau, self.target_main)
         elif keys[pygame.K_UP]:
-            robot.deplacer('haut', self.plateau)
+            robot.deplacer('haut', self.plateau, self.target_main)
         elif keys[pygame.K_DOWN]:
-            robot.deplacer('bas', self.plateau)
+            robot.deplacer('bas', self.plateau, self.target_main)
 
     def run(self):
         # Boucle principale
@@ -175,3 +213,4 @@ if __name__ == "__main__":
     #jeu.def_cible()  # Initialise les cibles
 
     jeu.run()
+

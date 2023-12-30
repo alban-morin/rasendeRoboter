@@ -39,7 +39,7 @@ def create_targetList(plateau):
                 if(x==7 or x==8): #gros carré du milieu donc ca compte pas comme cible
                     break
                 if case.coin():#vérifier si la case est un coin et donc devrait avoir une cible
-                    plateau.cases[x][y].type = 2  # modifier le type de case dans le plateau
+                    plateau.cases[x][y].type = 0  # modifier le type de case dans le plateau
                     pos_x = x
                     pos_y = y
                     target = Target(couleur, target_type, pos_x, pos_y)
