@@ -58,6 +58,6 @@ def create_targetList(plateau):
         couleur, target_type = color_type_combinations[i]
         targets[i].couleur = couleur
         targets[i].type = target_type
-        print(targets[i].posX,targets[i].posY, couleur, target_type)
+        print(targets[i].posX,targets[i].posY, couleur, plateau.cases[targets[i].posX][targets[i].posY].type)
 
     return targets

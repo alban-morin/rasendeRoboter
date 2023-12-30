@@ -22,15 +22,19 @@ class Game:
 
         # Initialiser le plateau
         self.plateau = Plateau()
-
+        # Définir la taille de chaque case
+        self.taille_case = self.largeur // 16
         # Initialiser les robots
-        self.robot_bleu = Robot(position=(0, 0), nom="Bleu")
-        self.robot_jaune = Robot(position=(15, 15), nom="Jaune")
-        self.robot_vert = Robot(position=(0, 15), nom="Vert")
-        self.robot_rouge = Robot(position=(15, 0), nom="Rouge")
+        self.robot_bleu = Robot(position=(0, 0), nom= BLEU)
+        self.robot_jaune = Robot(position=(15, 15), nom= JAUNE)
+        self.robot_vert = Robot(position=(0, 15), nom= VERT)
+        self.robot_rouge = Robot(position=(15, 0), nom= ROUGE)
 
         # Liste des robots
         self.liste_robots = [self.robot_bleu, self.robot_jaune,self.robot_vert,self.robot_rouge]
+        for robot in self.liste_robots:
+            i, j = robot.position.y // self.taille_case, robot.position.x // self.taille_case
+            self.plateau.cases[i][j].type = 1
 
         # Charger les images et redimensionner
         folder = os.path.dirname(os.path.realpath(__file__))
@@ -61,15 +65,18 @@ class Game:
             self.cible_rouge_image[i]= pygame.image.load(os.path.join(folder, 'targets_img', 'rouge'+str(i)+'.png'))
             self.cible_rouge_image[i]=pygame.transform.scale(self.cible_rouge_image[i], (self.robot_largeur, self.robot_hauteur))
 
-        # Définir la taille de chaque case
-        self.taille_case = self.largeur // 16
+
 
         #initialiser les cibles (fonction dans target.py, en dehors de la classe target)
         self.targets_list= create_targetList(self.plateau)
 
-        # Choix de la cible principale A FAIRE CORRECTEMENT
+        # Choix de la cible principale 
         self.target_main = random.choice(self.targets_list)
-        self.target_main.type = 2
+        print("Cible principale :")
+        print(self.target_main.posX,self.target_main.posY,self.target_main.couleur)
+        self.plateau.cases[self.target_main.posX][self.target_main.posY].type = 2
+        print(self.plateau.cases[self.target_main.posX][self.target_main.posY].type)
+    
         # Compteur de coups
         self.count = 0
 
