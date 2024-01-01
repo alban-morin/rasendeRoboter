@@ -16,7 +16,7 @@ class Robot:
         self.nom = nom
 
 
-    def deplacer(self, direction, plateau):
+    def deplacer(self, direction, plateau,target):
         """
         Déplace le robot dans la direction spécifiée.
 
@@ -40,13 +40,13 @@ class Robot:
             elif direction == 'bas' and i < 15 and not plateau.cases[i][j].bottom and plateau.cases[i+1][j].type !=1 :
                 plateau.cases[i][j].type = 0 if plateau.cases[i][j].type != 0 else plateau.cases[i][j].type
                 self.position.y += taille_case
-            elif plateau.cases[i][j].type == 2:
+            elif plateau.cases[i][j].type == 2 and self.nom == target.couleur:
                 i,j = self.coordonnee_plateau()
-                print(f"Position du robot dans le tableau : ({i}, {j})")
+                # print(f"Position du robot dans le tableau : ({i}, {j})")
                 print("Victoire !")
                 sleep(5)
-                for i in range(15):
-                    print("")
+                # for i in range(15):
+                #     print("")
                
                 return
             else:
@@ -54,10 +54,13 @@ class Robot:
 
             #reconvertir la position pixel en position back puis update le plateau
             i, j = self.position.y // taille_case, self.position.x // taille_case
-        plateau.cases[i][j].type = 1
+        if plateau.cases[i][j].type != 2:
+            plateau.cases[i][j].type = 1 
         
         print(f"Position du robot dans le tableau : ({i}, {j})")
-
+        print(f"type de la case : {plateau.cases[i][j].type}")
+        print(f"nom du robot : {self.nom}")
+        print(f"maintarget : {target.couleur} {plateau.cases[target.posX][target.posY].type} {target.posX} {target.posY} ")
 
     #convertir en positions d'affichage
     def coordonnee_plateau(self):
