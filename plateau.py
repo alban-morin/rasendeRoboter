@@ -107,7 +107,11 @@ class Plateau:
                 self.cases[i][j].bottom = True
                 self.cases[i + 1][j].top = True
 
-
+    def afficher(self):
+        for i in range(16):
+            for j in range(16):
+                print(self.cases[i][j].poid, end=' ')
+            print()
         
 
         # # Divide the plateau into 4 quarters

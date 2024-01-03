@@ -57,10 +57,10 @@ class Robot:
         if plateau.cases[i][j].type != 2:
             plateau.cases[i][j].type = 1 
         
-        print(f"Position du robot dans le tableau : ({i}, {j})")
-        print(f"type de la case : {plateau.cases[i][j].type}")
-        print(f"nom du robot : {self.nom}")
-        print(f"maintarget : {target.couleur} {plateau.cases[target.posX][target.posY].type} {target.posX} {target.posY} ")
+        # print(f"Position du robot dans le tableau : ({i}, {j})")
+        # print(f"type de la case : {plateau.cases[i][j].type}")
+        # print(f"nom du robot : {self.nom}")
+        # print(f"maintarget : {target.couleur} {plateau.cases[target.posX][target.posY].type} {target.posX} {target.posY} ")
 
     #convertir en positions d'affichage
     def coordonnee_plateau(self):
