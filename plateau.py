@@ -106,6 +106,14 @@ class Plateau:
             if i < 15:
                 self.cases[i][j].bottom = True
                 self.cases[i + 1][j].top = True
+        elif j == 15 and direction == 'right':
+            self.cases[i][j].right = True
+        elif j == 0 and direction == 'left':
+            self.cases[i][j].left = True
+        elif i == 0 and direction == 'top':
+            self.cases[i][j].top = True
+        elif i == 15 and direction == 'bottom':
+            self.cases[i][j].bottom = True
 
     def afficher(self):
         for i in range(16):

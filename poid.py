@@ -17,7 +17,7 @@ def poidplateau(plateaugame, target):
             plateau.cases[i][j].poid = float('inf')
 
     # Initialiser la file pour le parcours en largeur
-    queue = deque([(position_cible, 0,typedecoin(plateau.cases[position_cible]))])  # (position, poids,type de coin)
+    queue = deque([(position_cible, 0,typedecoin(plateau,position_cible))])  # (position, poids,type de coin)
     print("on a definie la queue")
     print(position_cible)
     # Définir le poids de la cible comme 0
@@ -27,11 +27,12 @@ def poidplateau(plateaugame, target):
  
     print("on a definie les directions")
     while queue:
-        
+            print("DEBUT BOUCLE WHILE")
+            
             current_position, current_poids,direction = queue.popleft()
             print(direction)
             
-            
+
             # Calculer la position suivante
             next_position = current_position
 
@@ -106,8 +107,10 @@ def poidplateau(plateaugame, target):
 
                     elif(direction == "D"):
                         i,j = check_haut_bas_jmoins1(plateau, i, j,queue,current_poids)
-
-
+                print("OIXJODIGJODIJXODEJFIX")
+                print(current_poids)
+                if current_poids > 9:
+                    break
                     
 
                         
@@ -144,23 +147,51 @@ def poidplateau(plateaugame, target):
     return plateau    # Afficher le tableau des poids après chaque itération
  # Ajouter un délai de 0.5 seconde entre chaque itération
 
-def typedecoin(case):
-    if case.top and case.right:
+def typedecoin(plateau,position):
+    print ("on est dans la fonction typedecoin")
+    print("la position est :")
+    print(position)
+   
+    if plateau.cases[position[0]][position[1]].top and plateau.cases[position[0]][position[1]].right or plateau.cases[position[0]][position[1]].top and plateau.cases[position[0]][position[1]+1].type == 1 or plateau.cases[position[0]][position[1]].right and plateau.cases[position[0]-1][position[1]].type == 1:
         return "TD"
-    elif case.top and case.left:
+    elif plateau.cases[position[0]][position[1]].top and plateau.cases[position[0]][position[1]].left or plateau.cases[position[0]][position[1]].top and plateau.cases[position[0]][position[1]-1].type == 1 or plateau.cases[position[0]][position[1]].left and plateau.cases[position[0]-1][position[1]].type == 1:
         return "TG"
-    elif case.bottom and case.right:
+    elif plateau.cases[position[0]][position[1]].bottom and plateau.cases[position[0]][position[1]].right or plateau.cases[position[0]][position[1]].bottom and plateau.cases[position[0]][position[1]+1].type == 1 or plateau.cases[position[0]][position[1]].right and plateau.cases[position[0]+1][position[1]].type == 1:
         return "BD"
-    elif case.bottom and case.left:
+    elif plateau.cases[position[0]][position[1]].bottom and plateau.cases[position[0]][position[1]].left or plateau.cases[position[0]][position[1]].bottom and plateau.cases[position[0]][position[1]-1].type == 1 or plateau.cases[position[0]][position[1]].left and plateau.cases[position[0]+1][position[1]].type == 1:
         return "BG"
-    elif case.top:
+    elif plateau.cases[position[0]][position[1]].top or position[0] == 0:
         return "T"
-    elif case.bottom:
+    elif plateau.cases[position[0]][position[1]].bottom or position[0] == 15:
         return "B"
-    elif case.left:
+    elif plateau.cases[position[0]][position[1]].left or position[1] == 0:
         return "G"
-    elif case.right:
+    elif plateau.cases[position[0]][position[1]].right or position[1] == 15:
         return "D"
+    else:
+        print("on a un probleme dans la fonction typedecoin")
+        print("la position est :")
+        print(position)
+        print(plateau.cases[position[0]][position[1]].top)
+        print(plateau.cases[position[0]][position[1]].bottom)
+        print(plateau.cases[position[0]][position[1]].left)
+        print(plateau.cases[position[0]][position[1]].right)
+    # if case.top and case.right:
+    #     return "TD"
+    # elif case.top and case.left:
+    #     return "TG"
+    # elif case.bottom and case.right:
+    #     return "BD"
+    # elif case.bottom and case.left:
+    #     return "BG"
+    # elif case.top:
+    #     return "T"
+    # elif case.bottom:
+    #     return "B"
+    # elif case.left:
+    #     return "G"
+    # elif case.right:
+    #     return "D"
 
 def check_gauche_droite_iplus1(plateau, i, j,queue,current_poids):
     next_position = i, j
@@ -226,8 +257,8 @@ def check_haut_bas_jmoins1(plateau, i, j,queue,current_poids):
 
 
 def ajoutqueue(queue,current_poids,next_position,plateau):
-    queue.append((next_position, current_poids + 1,typedecoin(plateau.cases[next_position])))
+    queue.append((next_position, current_poids + 1,typedecoin(plateau,next_position)))
     print(f"nous sommes dans la fonction ajoutqueue en position{next_position} et le type de coin est :")
-    print(typedecoin(plateau.cases[next_position]))
+    print(typedecoin(plateau,next_position))
     plateau.cases[next_position].poid = current_poids + 1
     
