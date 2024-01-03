@@ -7,7 +7,7 @@ import numpy as np
 from ai import *
 import os
 from target import *
-
+from poid import *
 class Game:
     def __init__(self):
         # Initialisation de Pygame
@@ -204,6 +204,7 @@ class Game:
                 self.pressed_key_robot(robot_selectionne, keys)
 
             self.dessiner_plateau()
+            self.plateau = poidplateau(self.plateau, self.target_main)
             # clock.tick(10)
             # if(self.ai.bfs()):
             #     pygame.quit()

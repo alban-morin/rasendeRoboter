@@ -1,5 +1,5 @@
 class Case:
-    def __init__(self, posx, posy, type, top=False, bottom=False, left=False, right=False):
+    def __init__(self, posx, posy, type, top=False, bottom=False, left=False, right=False,poid=0):
         """ 
         Args:
             posx (int): Position en x de la case.
@@ -18,7 +18,7 @@ class Case:
         self.bottom = bottom
         self.left = left
         self.right = right
-
+        self.poid = poid
     def coin(self):
         """
         Renvoie True si la case est un coin, False sinon.
@@ -27,6 +27,7 @@ class Case:
             return True
         else:
             return False
+    
 
     # def set_wall(self, direction, value=True):
     #     """
