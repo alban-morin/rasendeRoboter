@@ -8,6 +8,7 @@ from ai import *
 import os
 from target import *
 from poid import *
+from astar import *
 class Game:
     def __init__(self):
         # Initialisation de Pygame
@@ -80,6 +81,14 @@ class Game:
         # Compteur de coups
         self.count = 0
 
+    def start(self):
+        target_color = self.target_main.couleur
+
+        for robot in self.liste_robots:
+            if robot.nom == target_color:
+                    return robot
+            
+
         #self.ai = ai(self.liste_robots,self.plateau,self.count)
     def dessiner_plateau(self):
         #remplir de le fond de blanc
@@ -145,7 +154,16 @@ class Game:
             self.fenetre.blit(target_main_image, (target_main_x, target_main_y))
         
 
+        font = pygame.font.SysFont(None, 30)
 
+        for i in range(16):
+            for j in range(16):
+                case = self.plateau.cases[i][j]
+                x, y = j * self.taille_case, i * self.taille_case
+
+                poids_texte = font.render(str(case.poid), True, NOIR)
+                poids_rect = poids_texte.get_rect(center=(x + self.taille_case // 2, y + self.taille_case // 2))
+                self.fenetre.blit(poids_texte, poids_rect)
 
         for i in range(16):
             for j in range(16):
@@ -170,6 +188,9 @@ class Game:
         self.fenetre.blit(self.robot_rouge_image, self.robot_rouge.position.topleft)
         pygame.display.flip()
 
+    
+
+
     def pressed_key_robot(self, robot, keys):
         if keys[pygame.K_LEFT]:
             robot.deplacer('gauche', self.plateau, self.target_main)
@@ -187,6 +208,12 @@ class Game:
         robot_selectionne = None
 
         while running:
+            print("on deifnit les poids")
+            sleep(1)
+            self.plateau =  poidplateau(self.plateau, self.target_main)
+            sleep(1)
+            print("on affiche le plateau")
+            self.plateau.afficher()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -202,9 +229,22 @@ class Game:
 
             if robot_selectionne:
                 self.pressed_key_robot(robot_selectionne, keys)
-
+            print("on dessine le plateau")
+            sleep(1)
             self.dessiner_plateau()
-            self.plateau = poidplateau(self.plateau, self.target_main)
+
+
+    # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
+            print("on lance A*")
+            path = astar(self.plateau, self.start(), self.target_main)
+            if path:
+                print("on a un chemin")
+                print(path)
+            
+            else :
+                print("on a pas de chemin")
+        # Traiter le chemin trouvé, par exemple, déplacer le robot le long du chemin
+                print(path)
             # clock.tick(10)
             # if(self.ai.bfs()):
             #     pygame.quit()
@@ -222,3 +262,4 @@ if __name__ == "__main__":
 
     jeu.run()
 
+    
