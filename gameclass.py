@@ -182,10 +182,10 @@ class Game:
                 if case.right:
                     pygame.draw.line(self.fenetre, NOIR, (x + self.taille_case, y), (x + self.taille_case, y + self.taille_case), 4)
 
-        self.fenetre.blit(self.robot_bleu_image, self.robot_bleu.position.topleft)
-        self.fenetre.blit(self.robot_jaune_image, self.robot_jaune.position.topleft)
-        self.fenetre.blit(self.robot_vert_image, self.robot_vert.position.topleft)
-        self.fenetre.blit(self.robot_rouge_image, self.robot_rouge.position.topleft)
+        self.fenetre.blit(self.robot_bleu_image, self.robot_bleu.position)
+        self.fenetre.blit(self.robot_jaune_image, self.robot_jaune.position)
+        self.fenetre.blit(self.robot_vert_image, self.robot_vert.position)
+        self.fenetre.blit(self.robot_rouge_image, self.robot_rouge.position)
         pygame.display.flip()
 
     
@@ -240,6 +240,9 @@ class Game:
             if path:
                 print("on a un chemin")
                 print(path)
+                sleep(1)
+
+                break
             
             else :
                 print("on a pas de chemin")

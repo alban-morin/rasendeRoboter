@@ -46,7 +46,7 @@ def astar(plateau, start, target):
     return None  # Aucun chemin trouvé
 
 def heuristique(position, plateau):
-    # Utilisez le poids de la case comme heuristique
+    
     return plateau.cases[position[0]][position[1]].poid
 
 def get_neighbors(plateau, position):
