@@ -35,7 +35,7 @@ def astar(plateau, start, target):
 
             cout_actuel = current_node.cout_actuel + 1
             cout_heuristique = heuristique(neighbor, plateau)
-            if cout_heuristique != 'inf':
+            if cout_heuristique != float('inf'):
                 
                 new_node = Noeud(neighbor, cout_actuel, cout_heuristique, current_node)
 
