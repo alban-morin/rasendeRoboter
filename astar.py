@@ -12,7 +12,8 @@ def astar(plateau, start, target):
     start.position = start.position[0] // (800 // 16), start.position[1] // (800 // 16)
     open_set = [Noeud(start.position, 0, heuristique(start.position, plateau), None)]
     closed_set = set()
-
+    print("robot couleur: ", start.nom)
+    print("target position : ", target.posX , target.posY)
     while open_set:
         current_node = min(open_set, key=lambda node: node.cout_actuel + node.cout_heuristique)
         open_set.remove(current_node)
@@ -35,10 +36,12 @@ def astar(plateau, start, target):
 
             cout_actuel = current_node.cout_actuel + 1
             cout_heuristique = heuristique(neighbor, plateau)
-            new_node = Noeud(neighbor, cout_actuel, cout_heuristique, current_node)
+            if cout_heuristique != float('inf'):
+                
+                new_node = Noeud(neighbor, cout_actuel, cout_heuristique, current_node)
 
-            if new_node not in open_set:
-                open_set.append(new_node)
+                if new_node not in open_set:
+                    open_set.append(new_node)
 
         print("Open Set:", [node.position for node in open_set])
         print("Closed Set:", closed_set)
@@ -46,7 +49,7 @@ def astar(plateau, start, target):
     return None  # Aucun chemin trouvé
 
 def heuristique(position, plateau):
-    # Utilisez le poids de la case comme heuristique
+    
     return plateau.cases[position[0]][position[1]].poid
 
 def get_neighbors(plateau, position):
