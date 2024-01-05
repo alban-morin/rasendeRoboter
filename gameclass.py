@@ -236,6 +236,8 @@ class Game:
 
     # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
             print("on lance A*")
+            print(self.start().nom)
+            print(self.target_main.couleur)
             path = astar(self.plateau, self.start(), self.target_main)
             if path:
                 print("on a un chemin")

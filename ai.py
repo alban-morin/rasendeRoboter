@@ -67,13 +67,7 @@ class ai:
                                 print()
                             print("---")
 
-    def heuristique(self):
-        heuristique = 0
-        #heuristique = sqrt()
 
-
-    def Aetoile(self):
-        f=self.nombrecoups
 
 
 

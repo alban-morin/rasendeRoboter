@@ -12,7 +12,8 @@ def astar(plateau, start, target):
     start.position = start.position[0] // (800 // 16), start.position[1] // (800 // 16)
     open_set = [Noeud(start.position, 0, heuristique(start.position, plateau), None)]
     closed_set = set()
-
+    print("robot couleur: ", start.nom)
+    print("target position : ", target.posX , target.posY)
     while open_set:
         current_node = min(open_set, key=lambda node: node.cout_actuel + node.cout_heuristique)
         open_set.remove(current_node)

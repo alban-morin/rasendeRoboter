@@ -25,12 +25,16 @@ def poidplateau(plateaugame, target):
     # Définir les directions possibles
     directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]  # droite, gauche, bas, haut
     print("on a definie les directions")
+    
     while queue:
+        
         print("on est dans la boucle")
         current_position, current_poids = queue.popleft()
-        caseflag = False
+        flags = [False, False]
+        k = -1
         # Parcourir les 4 directions possibles
         for direction in directions:
+            
             print("on est dans la boucle for")
             # Calculer la position suivante
             next_position = current_position
@@ -74,21 +78,32 @@ def poidplateau(plateaugame, target):
                         next_position = i, j
                         print(next_position)
                 print("on a verifier les murs")
+                
                 if plateau.cases[next_position].poid > current_poids + 1 and next_position != current_position:
                     print("on a verifier les obstacles on ajoute a la queue")
-                    if verifposition(plateau,current_position,next_position,direction):
-
+            
+                    k = k + 1
                         
 
-                        queue.append((next_position, current_poids + 1))
-                        plateau.cases[next_position].poid = current_poids + 1
-                        print("le poid de la case est :")
-                        print(plateau.cases[next_position].poid)
-                        caseflag = True
-                    else:
-                        print("position impossible un robot dans cette direction")
-        if not caseflag:
-            plateau.cases[current_position].poid = float('inf')
+                    queue.append((next_position, current_poids + 1))
+                    plateau.cases[next_position].poid = current_poids + 1
+                    print("le poid de la case est :")
+                    print(plateau.cases[next_position].poid)
+                print (verifposition(plateau,current_position,next_position,direction))
+        #         if verifposition(plateau,current_position,next_position,direction):
+
+        #             print("on a verifier la position")
+        #             flags[k] == True
+
+        # if flags[0] == False and flags[1] == False and current_poids<=1 and next_position != current_position:
+        #     print("il faut deplacer un robot pour gagner probleme avec :------------------------------------------------------------------------------------------------------------------------------------------------")
+        #     print(current_position)
+        #     sleep(3)
+ 
+
+
+
+    
                         
                         
     return plateau    # Afficher le tableau des poids après chaque itération
@@ -139,4 +154,7 @@ def verifposition(plateau,position1,position2,direction):
         
     else:
         return False
+    
+
+    
 
