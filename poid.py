@@ -74,17 +74,62 @@ def poidplateau(plateaugame, target):
                         next_position = i, j
                         print(next_position)
                 print("on a verifier les murs on ajoute a la queue")
-                if plateau.cases[next_position].poid > current_poids + 1:
+                if verifposition(plateau,next_position,current_position,direction):
 
-                    queue.append((next_position, current_poids + 1))
-                    plateau.cases[next_position].poid = current_poids + 1
-                    print("le poid de la case est :")
-                    print(plateau.cases[next_position].poid)
-                    
+                    if plateau.cases[next_position].poid > current_poids + 1:
+
+                        queue.append((next_position, current_poids + 1))
+                        plateau.cases[next_position].poid = current_poids + 1
+                        print("le poid de la case est :")
+                        print(plateau.cases[next_position].poid)
+                        
+                    else:
+                        print("on a pas ajoute a la queue")
+                    print("le plateau est :")  
+                    plateau.afficher()
                 else:
-                    print("on a pas ajoute a la queue")
-                print("le plateau est :")  
-                plateau.afficher()
-        
+                    print("position impossible un robot")
     return plateau    # Afficher le tableau des poids après chaque itération
  # Ajouter un délai de 0.5 seconde entre chaque itération
+def verifposition(plateau,position1,position2,direction):
+    i, j = position2
+
+    # Déplacement vers la gauche
+    if (direction =)
+    j_left = j
+    while j_left > 0 and not plateau.cases[i][j_left].left and plateau.cases[i][j_left-1].type != 1:
+        j_left -= 1
+    if (i,j_left) != (i,j):
+
+        
+
+    # Déplacement vers la droite
+    j_right = j
+    while j_right < 15 and not plateau.cases[i][j_right].right and plateau.cases[i][j_right+1].type != 1:
+        j_right += 1
+    if (i,j_right) != (i,j):
+        neighbors.append((i, j_right))
+
+    # Déplacement vers le haut
+    i_up = i
+    while i_up > 0 and not plateau.cases[i_up][j].top and plateau.cases[i_up-1][j].type != 1:
+        i_up -= 1
+
+    if (i_up,j) != (i,j):
+        neighbors.append((i_up, j))
+
+    # Déplacement vers le bas
+    i_down = i
+
+    while i_down < 15 and not plateau.cases[i_down][j].bottom and plateau.cases[i_down+1][j].type != 1:
+        i_down += 1
+    if (i_down,j) != (i,j):
+        neighbors.append((i_down, j))
+
+    return neighbors
+    # Logique pour obtenir les voisins d'une position sur le plateau
+    # Adaptée à la logique de votre plateau
+
+def inversedirection(direction):
+    nouvel_direction =direction*(-1)
+    return nouvel_direction

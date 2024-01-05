@@ -35,10 +35,12 @@ def astar(plateau, start, target):
 
             cout_actuel = current_node.cout_actuel + 1
             cout_heuristique = heuristique(neighbor, plateau)
-            new_node = Noeud(neighbor, cout_actuel, cout_heuristique, current_node)
+            if cout_heuristique != 'inf':
+                
+                new_node = Noeud(neighbor, cout_actuel, cout_heuristique, current_node)
 
-            if new_node not in open_set:
-                open_set.append(new_node)
+                if new_node not in open_set:
+                    open_set.append(new_node)
 
         print("Open Set:", [node.position for node in open_set])
         print("Closed Set:", closed_set)
