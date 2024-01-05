@@ -30,7 +30,7 @@ class Game:
         self.robot_jaune = Robot(position=(15, 15), nom= JAUNE)
         self.robot_vert = Robot(position=(0, 15), nom= VERT)
         self.robot_rouge = Robot(position=(15, 0), nom= ROUGE)
-
+        self.ai = None
         # Liste des robots
         self.liste_robots = [self.robot_bleu, self.robot_jaune,self.robot_vert,self.robot_rouge]
         for robot in self.liste_robots:
@@ -206,7 +206,7 @@ class Game:
         clock = pygame.time.Clock()
         running = True
         robot_selectionne = None
-
+        self.ai = ai(self.liste_robots, self.plateau, self.count, self.target_main)
         while running:
             print("on deifnit les poids")
             sleep(1)
@@ -243,17 +243,20 @@ class Game:
                 print("on a un chemin")
                 print(path)
                 sleep(1)
-
-                break
+                print("l'ia à trouvé en ", len(path), "coups")
+                
             
             else :
                 print("on a pas de chemin")
         # Traiter le chemin trouvé, par exemple, déplacer le robot le long du chemin
-                print(path)
-            # clock.tick(10)
-            # if(self.ai.bfs()):
-            #     pygame.quit()
-            #     return
+                
+            clock.tick(10)
+            print("on lance bfs")
+            chemin = self.ai.bfs()
+            if(self.ai.bfs()):
+                print("on a un chemin pour le bfs")
+                print(chemin)
+                break
         pygame.quit()
         # Quitter Pygame
         
