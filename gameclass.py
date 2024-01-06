@@ -162,9 +162,9 @@ class Game:
                 case = self.plateau.cases[i][j]
                 x, y = j * self.taille_case, i * self.taille_case
 
-                # poids_texte = font.render(str(case.poid), True, NOIR)
-                # poids_rect = poids_texte.get_rect(center=(x + self.taille_case // 2, y + self.taille_case // 2))
-                # self.fenetre.blit(poids_texte, poids_rect)
+                poids_texte = font.render(str(case.poid), True, NOIR)
+                poids_rect = poids_texte.get_rect(center=(x + self.taille_case // 2, y + self.taille_case // 2))
+                self.fenetre.blit(poids_texte, poids_rect)
 
         for i in range(16):
             for j in range(16):
@@ -215,27 +215,16 @@ class Game:
         print("2. Non")
         choix = int(input())
         #choix=1
-        self.dessiner_plateau()
+        
         if choix == 1:
             running_user = True
 
         else:
             print("L'ia se lance...")
-            self.dessiner_plateau()
-            # initialisation de l'ia
-            intelligenceArtificielle = ia(self.start(), self.plateau, 0, self.target_main)
-            print("distance euclidienne : ", intelligenceArtificielle.distanceEuclidienne())
-            # initialisation de astar
-            # Aetoile = intelligenceArtificielle.astarInitialisation(self.plateau)
-            # print("distance euclidienne :  ", Aetoile.distanceEuclide(Aetoile.depart,Aetoile.arrivee))
-            # path=Aetoile.astarExecution()
-            # print(path)
 
-            #IA REMI
-            #self.ai = ai(self.liste_robots, self.plateau, self.count, self.target_main)
-            #self.ai.bfs()
             running_ai = True
-
+            self.ai = ai(self.liste_robots,self.plateau,self.count,self.target_main)
+            
         while running_user:
 
             for event in pygame.event.get():
@@ -253,48 +242,41 @@ class Game:
 
             if robot_selectionne:
                 self.pressed_key_robot(robot_selectionne, keys)
-            #print("on dessine le plateau")
-            #sleep(0.25)
-            #print("distance euclidienne : ", intelligenceArtificielle.distanceEuclidienne())
+
             self.dessiner_plateau() #dessine le plateau avec les robots
 
         while running_ai:
             #afficher le plateau
+            self.plateau =  poidplateau(self.plateau, self.target_main)
             self.dessiner_plateau()
-
-            #self.ai.bfs()
-            # print("on deifnit les poids")
-            # sleep(1)
-            # #self.plateau =  poidplateau(self.plateau, self.target_main)
-            # sleep(1)
-            # print("on affiche le plateau")
-            # self.plateau.afficher() #affiche le plateau avec les poids
-
+            chemin = self.ai.bfs()
+            if(chemin):
+                print("on a un chemin pour le bfs")
+                print(chemin)
+                break
+            else: 
+ 
 
 
-    # # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
-    #         print("on lance A*")
-    #         print(self.start().nom)
-    #         print(self.target_main.couleur)
-    #         path = astar(self.plateau, self.start(), self.target_main)
-    #         if path:
-    #             print("on a un chemin")
-    #             print(path)
-    #             sleep(1)
-    #             print("l'ia à trouvé en ", len(path), "coups")
-    #
-    #
-    #         else :
-    #             print("on a pas de chemin")
-        # Traiter le chemin trouvé, par exemple, déplacer le robot le long du chemin
-        #
-        #     clock.tick(10)
-        #     print("on lance bfs")
-        #     chemin = self.ai.bfs()
-        #     if(self.ai.bfs()):
-        #         print("on a un chemin pour le bfs")
-        #         print(chemin)
-        #         break
+        # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
+                print("pas de chemin pour le bfs")
+                print("on lance A*")
+                print(self.start().nom)
+                print(self.target_main.couleur)
+                path = astar(self.plateau, self.start(), self.target_main)
+                if path:
+                    print("on a un chemin")
+                    print(path)
+                    
+                    print("l'ia à trouvé en ", len(path), "coups")
+                    break
+                else:
+                    print("pas de chemin")
+                    break
+        
+    
+
+
         pygame.quit()
         # Quitter Pygame
         
