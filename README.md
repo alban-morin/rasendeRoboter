@@ -1,1 +1,1 @@
-le fichier game ne sert à rien le bon fichier est gameclass voila# rasendeRoboter
+Intelligence Artificielle trouvant des solutions pour le jeu Rasende Roboter en un minimum de coups.

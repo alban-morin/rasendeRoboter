@@ -7,6 +7,7 @@ import numpy as np
 from ai import *
 import os
 from target import *
+from ia import *
 from poid import *
 from astar import *
 class Game:
@@ -192,6 +193,8 @@ class Game:
 
 
     def pressed_key_robot(self, robot, keys):
+        #self.count += 1
+        #print("nombre de coups : ", self.count)
         if keys[pygame.K_LEFT]:
             robot.deplacer('gauche', self.plateau, self.target_main)
         elif keys[pygame.K_RIGHT]:
@@ -204,19 +207,29 @@ class Game:
     def run(self):
         # Boucle principale
         clock = pygame.time.Clock()
-        running = True
         robot_selectionne = None
-        self.ai = ai(self.liste_robots, self.plateau, self.count, self.target_main)
-        while running:
-            print("on deifnit les poids")
-            sleep(1)
-            self.plateau =  poidplateau(self.plateau, self.target_main)
-            sleep(1)
-            print("on affiche le plateau")
-            self.plateau.afficher()
+        running_user = False # variable pour savoir si on joue par nous meme ou si on lance l'ia
+        running_ai = False # variable pour savoir si on lance l'ia
+        print("Voulez vous jouer par vous-meme?")
+        print("1. Oui")
+        print("2. Non")
+        choix = int(input())
+        #choix=1
+        
+        if choix == 1:
+            running_user = True
+
+        else:
+            print("L'ia se lance...")
+
+            running_ai = True
+            self.ai = ai(self.liste_robots,self.plateau,self.count,self.target_main)
+            
+        while running_user:
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    running_user = False
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     mouse_x, mouse_y = event.pos
                     # Vérifier quel robot a été cliqué
@@ -229,34 +242,41 @@ class Game:
 
             if robot_selectionne:
                 self.pressed_key_robot(robot_selectionne, keys)
-            print("on dessine le plateau")
-            sleep(1)
+
+            self.dessiner_plateau() #dessine le plateau avec les robots
+
+        while running_ai:
+            #afficher le plateau
+            self.plateau =  poidplateau(self.plateau, self.target_main)
             self.dessiner_plateau()
-
-
-    # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
-            print("on lance A*")
-            print(self.start().nom)
-            print(self.target_main.couleur)
-            path = astar(self.plateau, self.start(), self.target_main)
-            if path:
-                print("on a un chemin")
-                print(path)
-                sleep(1)
-                print("l'ia à trouvé en ", len(path), "coups")
-                
-            
-            else :
-                print("on a pas de chemin")
-        # Traiter le chemin trouvé, par exemple, déplacer le robot le long du chemin
-                
-            clock.tick(10)
-            print("on lance bfs")
             chemin = self.ai.bfs()
-            if(self.ai.bfs()):
+            if(chemin):
                 print("on a un chemin pour le bfs")
                 print(chemin)
                 break
+            else: 
+ 
+
+
+        # Appeler A* ici en utilisant self.plateau et les positions des robots/targets
+                print("pas de chemin pour le bfs")
+                print("on lance A*")
+                print(self.start().nom)
+                print(self.target_main.couleur)
+                path = astar(self.plateau, self.start(), self.target_main)
+                if path:
+                    print("on a un chemin")
+                    print(path)
+                    
+                    print("l'ia à trouvé en ", len(path), "coups")
+                    break
+                else:
+                    print("pas de chemin")
+                    break
+        
+    
+
+
         pygame.quit()
         # Quitter Pygame
         
