@@ -55,12 +55,3 @@ def list_coordonnee(etat_actuel):
     positions_robots_pixel = [robot.position for robot in etat_actuel.robots]
     positions_robots = [(pos[1] // taille_case, pos[0] // taille_case) for pos in positions_robots_pixel]
     return positions_robots
-
-
-
-
-        
-def list_coordonnee(etat_actuel):
-        positions_robots_pixel = [robot.position for robot in etat_actuel.robots]
-        positions_robots = [(pos[1] // taille_case, pos[0] // taille_case) for pos in positions_robots_pixel]
-        return positions_robots
